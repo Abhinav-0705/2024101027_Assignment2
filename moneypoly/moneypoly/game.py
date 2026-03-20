@@ -271,6 +271,7 @@ class Game:
         # Offer to pay the fine voluntarily
         if ui.confirm(f"  Pay ${JAIL_FINE} fine to leave jail? (y/n): "):
             self.bank.collect(JAIL_FINE)
+            player.deduct_money(JAIL_FINE)
             player.in_jail = False
             player.jail_turns = 0
             print(f"  {player.name} paid the ${JAIL_FINE} fine and is released.")
