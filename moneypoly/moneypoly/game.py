@@ -333,14 +333,16 @@ class Game:
         elif action == "birthday":
             for other in self.players:
                 if other != player and other.balance >= value:
-                    other.deduct_money(value)
-                    player.add_money(value)
+                    payment = min(other.balance, value)
+                    other.deduct_money(payment)
+                    player.add_money(payment)
 
         elif action == "collect_from_all":
             for other in self.players:
                 if other != player and other.balance >= value:
-                    other.deduct_money(value)
-                    player.add_money(value)
+                    payment = min(other.balance, value)
+                    other.deduct_money(payment)
+                    player.add_money(payment)
 
 
     def _check_bankruptcy(self, player):
