@@ -1,5 +1,3 @@
-import os
-
 from moneypoly.config import (
     GO_TO_JAIL_POSITION,
     JAIL_FINE,
