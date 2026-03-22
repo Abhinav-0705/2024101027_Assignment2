@@ -1,3 +1,4 @@
+"""Board setup and tile lookup for MoneyPoly."""
 from moneypoly.property import Property, PropertyGroup
 from moneypoly.config import (
     JAIL_POSITION,

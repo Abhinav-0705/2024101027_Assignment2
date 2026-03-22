@@ -1,3 +1,4 @@
+"""Chance and Community Chest card definitions."""
 import random
 
 CHANCE_CARDS = [

@@ -1,3 +1,4 @@
+"""Player model for MoneyPoly."""
 from moneypoly.config import STARTING_BALANCE, BOARD_SIZE, GO_SALARY, JAIL_POSITION
 
 

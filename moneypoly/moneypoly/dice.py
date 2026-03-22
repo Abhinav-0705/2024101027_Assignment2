@@ -1,3 +1,4 @@
+"""Dice simulation for MoneyPoly."""
 import random
 
 class Dice:

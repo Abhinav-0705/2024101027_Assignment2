@@ -1,3 +1,4 @@
+"""Entry point for the MoneyPoly game."""
 from moneypoly.game import Game
 
 
