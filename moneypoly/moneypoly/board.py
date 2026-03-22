@@ -53,30 +53,45 @@ class Board:
     def _create_properties(self):
         """Instantiate every purchasable property and return as a list."""
         g = self.groups
-        return [
-            Property("Mediterranean Avenue",   1,  60,  2,  g["brown"]),
-            Property("Baltic Avenue",          3,  60,  4,  g["brown"]),
-            Property("Oriental Avenue",        6,  100, 6,  g["light_blue"]),
-            Property("Vermont Avenue",         8,  100, 6,  g["light_blue"]),
-            Property("Connecticut Avenue",     9,  120, 8,  g["light_blue"]),
-            Property("St. Charles Place",      11, 140, 10, g["pink"]),
-            Property("States Avenue",          13, 140, 10, g["pink"]),
-            Property("Virginia Avenue",        14, 160, 12, g["pink"]),
-            Property("St. James Place",        16, 180, 14, g["orange"]),
-            Property("Tennessee Avenue",       18, 180, 14, g["orange"]),
-            Property("New York Avenue",        19, 200, 16, g["orange"]),
-            Property("Kentucky Avenue",        21, 220, 18, g["red"]),
-            Property("Indiana Avenue",         23, 220, 18, g["red"]),
-            Property("Illinois Avenue",        24, 240, 20, g["red"]),
-            Property("Atlantic Avenue",        26, 260, 22, g["yellow"]),
-            Property("Ventnor Avenue",         27, 260, 22, g["yellow"]),
-            Property("Marvin Gardens",         29, 280, 24, g["yellow"]),
-            Property("Pacific Avenue",         31, 300, 26, g["green"]),
-            Property("North Carolina Avenue",  32, 300, 26, g["green"]),
-            Property("Pennsylvania Avenue",    34, 320, 28, g["green"]),
-            Property("Park Place",             37, 350, 35, g["dark_blue"]),
-            Property("Boardwalk",              39, 400, 50, g["dark_blue"]),
+        props = [
+            Property("Mediterranean Avenue",   1,  60,  2),
+            Property("Baltic Avenue",          3,  60,  4),
+            Property("Oriental Avenue",        6,  100, 6),
+            Property("Vermont Avenue",         8,  100, 6),
+            Property("Connecticut Avenue",     9,  120, 8),
+            Property("St. Charles Place",      11, 140, 10),
+            Property("States Avenue",          13, 140, 10),
+            Property("Virginia Avenue",        14, 160, 12),
+            Property("St. James Place",        16, 180, 14),
+            Property("Tennessee Avenue",       18, 180, 14),
+            Property("New York Avenue",        19, 200, 16),
+            Property("Kentucky Avenue",        21, 220, 18),
+            Property("Indiana Avenue",         23, 220, 18),
+            Property("Illinois Avenue",        24, 240, 20),
+            Property("Atlantic Avenue",        26, 260, 22),
+            Property("Ventnor Avenue",         27, 260, 22),
+            Property("Marvin Gardens",         29, 280, 24),
+            Property("Pacific Avenue",         31, 300, 26),
+            Property("North Carolina Avenue",  32, 300, 26),
+            Property("Pennsylvania Avenue",    34, 320, 28),
+            Property("Park Place",             37, 350, 35),
+            Property("Boardwalk",              39, 400, 50),
         ]
+        group_map = [
+            ("brown",      [0, 1]),
+            ("light_blue", [2, 3, 4]),
+            ("pink",       [5, 6, 7]),
+            ("orange",     [8, 9, 10]),
+            ("red",        [11, 12, 13]),
+            ("yellow",     [14, 15, 16]),
+            ("green",      [17, 18, 19]),
+            ("dark_blue",  [20, 21]),
+        ]
+        for group_key, indices in group_map:
+            for i in indices:
+                g[group_key].add_property(props[i])
+        return props
+
 
     def get_property_at(self, position):
         """Return the Property at `position`, or None if there is none."""

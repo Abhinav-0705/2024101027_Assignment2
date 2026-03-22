@@ -25,9 +25,10 @@ class Game:
         self.players = [Player(name) for name in player_names]
         self.current_index = 0
         self.turn_number = 0
-        self.running = True
-        self.chance_deck = CardDeck(CHANCE_CARDS)
-        self.community_deck = CardDeck(COMMUNITY_CHEST_CARDS)
+        self.decks = {
+            "chance": CardDeck(CHANCE_CARDS),
+            "community_chest": CardDeck(COMMUNITY_CHEST_CARDS),
+        }
 
     def current_player(self):
         """Return the Player whose turn it currently is."""
@@ -94,11 +95,11 @@ class Game:
             print(f"  {player.name} rests on Free Parking. Nothing happens.")
 
         elif tile == "chance":
-            card = self.chance_deck.draw()
+            card = self.decks["chance"].draw()
             self._apply_card(player, card)
 
         elif tile == "community_chest":
-            card = self.community_deck.draw()
+            card = self.decks["community_chest"].draw()
             self._apply_card(player, card)
 
         elif tile == "railroad":
@@ -303,20 +304,21 @@ class Game:
         if action == "collect":
             amount = self.bank.pay_out(value)
             player.add_money(amount)
-
         elif action == "pay":
             player.deduct_money(value)
             self.bank.collect(value)
-
         elif action == "jail":
             player.go_to_jail()
             print(f"  {player.name} has been sent to Jail!")
-
         elif action == "jail_free":
             player.get_out_of_jail_cards += 1
             print(f"  {player.name} now holds a Get Out of Jail Free card.")
+        else:
+            self._apply_card_special(player, action, value)
 
-        elif action == "move_to":
+    def _apply_card_special(self, player, action, value):
+        """Handle move, birthday and collect-from-all card actions."""
+        if action == "move_to":
             old_pos = player.position
             player.position = value
             if value < old_pos:
@@ -327,17 +329,15 @@ class Game:
                 prop = self.board.get_property_at(value)
                 if prop:
                     self._handle_property_tile(player, prop)
-
         elif action == "birthday":
             for other in self.players:
-                if other != player and other.balance >= value:
+                if other != player:
                     payment = min(other.balance, value)
                     other.deduct_money(payment)
                     player.add_money(payment)
-
         elif action == "collect_from_all":
             for other in self.players:
-                if other != player and other.balance >= value:
+                if other != player:
                     payment = min(other.balance, value)
                     other.deduct_money(payment)
                     player.add_money(payment)
@@ -347,8 +347,6 @@ class Game:
         """Eliminate `player` from the game if they are bankrupt."""
         if player.is_bankrupt():
             print(f"\n  *** {player.name} is bankrupt and has been eliminated! ***")
-            player.is_eliminated = True
-            # Release all properties back to the bank
             for prop in list(player.properties):
                 prop.owner = None
                 prop.is_mortgaged = False
@@ -371,7 +369,7 @@ class Game:
         for p in self.players:
             print(f"  {p.name} starts with ${p.balance}.")
 
-        while self.running and self.turn_number < MAX_TURNS:
+        while self.turn_number < MAX_TURNS:
             if len(self.players) <= 1:
                 break
             self.play_turn()
@@ -461,10 +459,11 @@ class Game:
         for i, prop in enumerate(player.properties):
             print(f"  {i + 1}. {prop.name}")
         pidx = ui.safe_int_input("  Property to offer: ", default=0) - 1
-        if not (0 <= pidx < len(player.properties)):
+        if not 0 <= pidx < len(player.properties):
             return
         chosen_prop = player.properties[pidx]
         cash = ui.safe_int_input(
             f"  Cash to receive from {partner.name}: $", default=0
         )
         self.trade(player, partner, chosen_prop, cash)
+        
