@@ -16,3 +16,11 @@ class DataStore:
     """Holds all system state for StreetRace Manager."""
 
     crew: dict[str, CrewMember] = field(default_factory=dict)
+
+    # Extra roles assigned via crew_management (in addition to CrewMember.role).
+    # Keyed by CrewMember.name to preserve original display casing.
+    crew_roles: dict[str, set[str]] = field(default_factory=dict)
+
+    # Skill levels per member per role (role keys are lowercased).
+    # Example: crew_skills["Alice"]["driver"] == 7
+    crew_skills: dict[str, dict[str, int]] = field(default_factory=dict)
