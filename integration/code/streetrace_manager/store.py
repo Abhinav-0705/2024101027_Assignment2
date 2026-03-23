@@ -8,7 +8,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 
-from .models import CrewMember
+from .models import CrewMember, Vehicle
 
 
 @dataclass(slots=True)
@@ -24,3 +24,9 @@ class DataStore:
     # Skill levels per member per role (role keys are lowercased).
     # Example: crew_skills["Alice"]["driver"] == 7
     crew_skills: dict[str, dict[str, int]] = field(default_factory=dict)
+
+    # Inventory state
+    cash_balance: int = 0
+    vehicles: dict[str, Vehicle] = field(default_factory=dict)
+    parts: dict[str, int] = field(default_factory=dict)
+    tools: dict[str, int] = field(default_factory=dict)

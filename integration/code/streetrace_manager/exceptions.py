@@ -15,3 +15,11 @@ class CrewMemberNotFoundError(StreetRaceError):
 
 class ValidationError(StreetRaceError):
     """Raised when input data fails validation."""
+
+
+class DuplicateVehicleError(StreetRaceError):
+    """Raised when attempting to add a vehicle that already exists."""
+
+
+class VehicleNotFoundError(StreetRaceError):
+    """Raised when a requested vehicle cannot be found."""

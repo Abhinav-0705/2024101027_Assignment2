@@ -11,3 +11,12 @@ class CrewMember:
 
     name: str
     role: str
+
+
+@dataclass(frozen=True, slots=True)
+class Vehicle:
+    """Represents a vehicle in the inventory."""
+
+    vehicle_id: str
+    model: str
+    condition: str = "ok"  # ok | damaged
