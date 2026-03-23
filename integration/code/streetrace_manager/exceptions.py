@@ -31,3 +31,7 @@ class RaceNotFoundError(StreetRaceError):
 
 class RaceEntryError(StreetRaceError):
     """Raised when a race entry violates business rules."""
+
+
+class ResultError(StreetRaceError):
+    """Raised when recording or querying race results fails."""

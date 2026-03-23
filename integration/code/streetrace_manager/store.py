@@ -8,7 +8,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 
-from .models import CrewMember, Race, Vehicle
+from .models import CrewMember, Race, RaceResult, Vehicle
 
 
 @dataclass(slots=True)
@@ -34,3 +34,7 @@ class DataStore:
     # Race management state
     races: dict[str, Race] = field(default_factory=dict)
     next_race_id: int = 1
+
+    # Results state
+    results: dict[str, RaceResult] = field(default_factory=dict)
+    rankings: dict[str, int] = field(default_factory=dict)

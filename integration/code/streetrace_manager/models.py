@@ -38,3 +38,13 @@ class Race:
     name: str
     entries: list[RaceEntry] = field(default_factory=list)
     status: str = "created"  # created | completed
+
+
+@dataclass(frozen=True, slots=True)
+class RaceResult:
+    """Represents the recorded outcome of a race."""
+
+    race_id: str
+    winner_driver: str
+    prize_money: int
+    damaged_vehicle_id: str | None = None
