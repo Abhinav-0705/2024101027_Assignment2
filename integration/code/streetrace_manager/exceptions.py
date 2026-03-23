@@ -23,3 +23,11 @@ class DuplicateVehicleError(StreetRaceError):
 
 class VehicleNotFoundError(StreetRaceError):
     """Raised when a requested vehicle cannot be found."""
+
+
+class RaceNotFoundError(StreetRaceError):
+    """Raised when a requested race cannot be found."""
+
+
+class RaceEntryError(StreetRaceError):
+    """Raised when a race entry violates business rules."""
